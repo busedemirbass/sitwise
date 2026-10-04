@@ -1,0 +1,266 @@
+:root {
+  --bg: #f6f7f5;
+  --surface: #ffffff;
+  --border: #e3e6e1;
+  --text: #1c2420;
+  --muted: #66716b;
+  --accent: #0f766e;
+  --ok-bg: #d9f2ec;
+  --ok-fg: #0f5e57;
+  --warn-bg: #fcefd2;
+  --warn-fg: #8a5a00;
+  --error-bg: #fde4e1;
+  --error-fg: #9b2c1f;
+  color-scheme: light dark;
+  font-family:
+    system-ui,
+    -apple-system,
+    'Segoe UI',
+    Roboto,
+    sans-serif;
+  font-size: 14px;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #121614;
+    --surface: #1a201d;
+    --border: #2a322e;
+    --text: #e6ebe8;
+    --muted: #94a19a;
+    --accent: #5eead4;
+    --ok-bg: #133b35;
+    --ok-fg: #8ff0dd;
+    --warn-bg: #3d2f10;
+    --warn-fg: #f5cf7a;
+    --error-bg: #42201b;
+    --error-fg: #ffb4a8;
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+}
+
+.app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 20px;
+  border-bottom: 1px solid var(--border);
+  background: var(--surface);
+}
+
+.brand {
+  font-weight: 600;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.logo {
+  color: var(--accent);
+}
+
+.topbar-actions {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 340px;
+  gap: 16px;
+  padding: 16px 20px;
+  flex: 1;
+}
+
+@media (max-width: 900px) {
+  .layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+.video-wrap {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  background: #0b0d0c;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.video-wrap video,
+.video-wrap canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.mirror {
+  transform: scaleX(-1);
+}
+
+.video-placeholder {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  text-align: center;
+  color: #c9d1cc;
+}
+
+.privacy {
+  color: var(--muted);
+  font-size: 12px;
+  margin: 8px 2px;
+}
+
+.side {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 14px 16px;
+}
+
+.card h2 {
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--muted);
+  margin: 0 0 10px;
+}
+
+.metrics {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 6px 12px;
+  margin: 0 0 12px;
+}
+
+.metrics dt {
+  color: var(--muted);
+}
+
+.metrics dd {
+  margin: 0;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.controls {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.controls label {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+label.row,
+.controls label.row {
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+  color: var(--text);
+  font-size: 13px;
+}
+
+button,
+select,
+textarea {
+  font: inherit;
+  color: var(--text);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 6px 10px;
+}
+
+button {
+  cursor: pointer;
+}
+
+button:hover:not(:disabled) {
+  border-color: var(--accent);
+}
+
+button:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+textarea {
+  width: 100%;
+  margin: 10px 0 6px;
+  font-size: 12px;
+  resize: vertical;
+}
+
+.pill {
+  font-size: 12px;
+  padding: 3px 10px;
+  border-radius: 999px;
+}
+
+.pill-ok {
+  background: var(--ok-bg);
+  color: var(--ok-fg);
+}
+
+.pill-warn {
+  background: var(--warn-bg);
+  color: var(--warn-fg);
+}
+
+.banner {
+  padding: 10px 12px;
+  border-radius: 8px;
+  background: var(--warn-bg);
+  color: var(--warn-fg);
+  font-size: 13px;
+}
+
+.banner-error {
+  background: var(--error-bg);
+  color: var(--error-fg);
+}
+
+.muted {
+  color: var(--muted);
+}
+
+.small {
+  font-size: 12px;
+}
+
+code {
+  font-size: 12px;
+}
