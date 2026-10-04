@@ -1,15 +1,17 @@
 import { useEffect, useState } from 'react';
 import type { AppSettings } from '../../shared/ipc';
 import { useCamera } from './hooks/useCamera';
+import { useMediaPipe } from './hooks/useMediaPipe';
 
 /**
- * SW-007: iskelet arayüzü. Kamera önizlemesi, izleme durumu ve arka plan ayarları.
- * MediaPipe ölçümleri SW-008'de bu ekrana eklenecek.
+ * SW-007 iskelet arayüzü ve SW-008 MediaPipe FPS / çıkarım ölçümü.
  */
 export function App() {
   const [settings, setSettings] = useState<AppSettings | null>(null);
   const paused = settings?.paused ?? false;
   const { videoRef, status: cameraStatus, error: cameraError, resolution } = useCamera(!paused);
+  const { fps, inferenceTimeMs, ready } = useMediaPipe(videoRef, cameraStatus === 'live');
+  const live = ready && cameraStatus === 'live';
 
   useEffect(() => {
     void window.sitwise.getSettings().then(setSettings);
@@ -60,6 +62,10 @@ export function App() {
               <dd>{cameraStatus}</dd>
               <dt>Çözünürlük</dt>
               <dd>{resolution || '—'}</dd>
+              <dt>FPS</dt>
+              <dd>{live ? fps.toFixed(1) : '—'}</dd>
+              <dt>Çıkarım</dt>
+              <dd>{live ? `${inferenceTimeMs.toFixed(1)} ms` : '—'}</dd>
               <dt>Platform</dt>
               <dd>{settings?.platform ?? '—'}</dd>
             </dl>
