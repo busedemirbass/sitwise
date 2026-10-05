@@ -61,4 +61,14 @@ Sent when the user marks an alert as wrong. `alert_id` comes from the server.
 
 ## Server mapping
 
-Filled in by the server owner: the endpoint for each JSON, the matching table, and the status code returned for an invalid request.
+Each message is a JSON body. A malformed body returns `422`. A request without a token returns `401`.
+
+| Message | Method and path | Table | Success |
+| --- | --- | --- | --- |
+| Metric sample | `POST /metrics` | `metric_samples` | `201` |
+| Alert | `POST /alerts` | `alerts` | `201` |
+| Feedback | `POST /feedback` | `alert_feedback` | `201` |
+
+`POST /metrics` stores one row per item in `samples`. `session_id` must already exist in `sessions`.
+
+`POST /alerts` returns the new `alert_id`. The client sends that id back in `POST /feedback`. `alert_id` must already exist in `alerts`. An unknown `session_id` or `alert_id` returns `404`.
