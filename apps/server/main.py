@@ -1,31 +1,24 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-# FastAPI uygulamasını başlatıyoruz
-app = FastAPI(
-    title="SitWise API",
-    description="SitWise Ergonomi Asistanı Backend Servisi",
-    version="0.1.0",
-)
+app = FastAPI(title="SitWise Server", version="0.1.0")
 
-# Masaüstü uygulamasının (Electron) sunucuya sorunsuz bağlanabilmesi için CORS izni
+origins = [
+    "http://localhost:3000",
+    "http://localhost:5173",
+    "http://127.0.0.1:3000",
+    "http://127.0.0.1:5173",
+]
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
-    allow_credentials=True,
+    allow_origins=origins,
+    allow_credentials=False,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
 
-@app.get("/health", tags=["Health"])
+@app.get("/health")
 def health_check():
-    """Sunucunun ayakta olup olmadığını kontrol eden uç nokta."""
-    return {"status": "healthy", "service": "SitWise API", "version": "0.1.0"}
-
-
-if __name__ == "__main__":
-    import uvicorn
-
-    # Sunucuyu yerel makinede 8000 portunda başlatıyoruz
-    uvicorn.run("main:app", host="127.0.0.1", port=8000, reload=True)
+    return {"status": "ok", "service": "sitwise-server"}
