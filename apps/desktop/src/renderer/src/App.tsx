@@ -10,7 +10,7 @@ export function App() {
   const [settings, setSettings] = useState<AppSettings | null>(null);
   const paused = settings?.paused ?? false;
   const { videoRef, status: cameraStatus, error: cameraError, resolution } = useCamera(!paused);
-  const { fps, inferenceTimeMs, ready } = useMediaPipe(videoRef, cameraStatus === 'live');
+  const { fps, inferenceTimeMs, ready, neckRatio, shoulderTilt } = useMediaPipe(videoRef, cameraStatus === 'live');
   const live = ready && cameraStatus === 'live';
 
   useEffect(() => {
@@ -66,6 +66,10 @@ export function App() {
               <dd>{live ? fps.toFixed(1) : '—'}</dd>
               <dt>Çıkarım</dt>
               <dd>{live ? `${inferenceTimeMs.toFixed(1)} ms` : '—'}</dd>
+              <dt>Boyun</dt>
+              <dd>{live && neckRatio != null ? neckRatio.toFixed(2) : '—'}</dd>
+              <dt>Omuz</dt>
+              <dd>{live && shoulderTilt != null ? shoulderTilt.toFixed(2) : '—'}</dd>
               <dt>Platform</dt>
               <dd>{settings?.platform ?? '—'}</dd>
             </dl>
