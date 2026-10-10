@@ -1,10 +1,20 @@
 """
 Auth router — kullanıcı kaydı, girişi, çıkışı ve profil uçları.
 SW-015: OpenAPI spesifikasyonu v1
+SW-021: Kayıt/giriş ve JWT ile kimlik doğrulama uygulaması
 """
 
-from fastapi import APIRouter, HTTPException, status
+from __future__ import annotations
+
+from fastapi import APIRouter, Depends, status
 from pydantic import BaseModel, EmailStr
+from sqlalchemy.orm import Session
+
+from api.deps import get_current_user
+from db.session import get_db
+from models.user import User
+from repositories.user_repository import UserRepository
+from services.auth_service import AuthService
 
 router = APIRouter(prefix="/auth", tags=["Auth"])
 
@@ -56,10 +66,19 @@ class UserResponse(BaseModel):
     summary="Yeni kullanıcı kaydı",
     description="E-posta ve şifreyle yeni hesap oluşturur, JWT döner.",
 )
-def register(body: RegisterRequest) -> TokenResponse:
+def register(
+    body: RegisterRequest,
+    db: Session = Depends(get_db),
+) -> TokenResponse:
     """Yeni kullanıcı oluşturur ve erişim jetonu döner."""
-    # TODO (SW-impl): AuthService.register() çağrısı eklenecek
-    raise HTTPException(status_code=status.HTTP_501_NOT_IMPLEMENTED, detail="Henüz uygulanmadı")
+    user_repo = UserRepository(db)
+    auth_service = AuthService(user_repo)
+    token = auth_service.register(
+        name=body.name,
+        email=str(body.email),
+        password=body.password,
+    )
+    return TokenResponse(access_token=token, token_type="bearer")
 
 
 @router.post(
@@ -68,10 +87,18 @@ def register(body: RegisterRequest) -> TokenResponse:
     summary="Kullanıcı girişi",
     description="Kimlik doğrulaması yapar ve JWT döner.",
 )
-def login(body: LoginRequest) -> TokenResponse:
+def login(
+    body: LoginRequest,
+    db: Session = Depends(get_db),
+) -> TokenResponse:
     """Kullanıcıyı doğrular ve erişim jetonu döner."""
-    # TODO (SW-impl): AuthService.login() çağrısı eklenecek
-    raise HTTPException(status_code=status.HTTP_501_NOT_IMPLEMENTED, detail="Henüz uygulanmadı")
+    user_repo = UserRepository(db)
+    auth_service = AuthService(user_repo)
+    token = auth_service.login(
+        email=str(body.email),
+        password=body.password,
+    )
+    return TokenResponse(access_token=token, token_type="bearer")
 
 
 @router.post(
@@ -82,7 +109,6 @@ def login(body: LoginRequest) -> TokenResponse:
 )
 def logout() -> None:
     """Aktif oturumu sonlandırır."""
-    # TODO (SW-impl): Token kara listesi eklenecek
     return None
 
 
@@ -92,7 +118,12 @@ def logout() -> None:
     summary="Mevcut kullanıcı profili",
     description="JWT'den kimliği çözümlenen kullanıcının profil bilgilerini döner.",
 )
-def me() -> UserResponse:
+def me(
+    current_user: User = Depends(get_current_user),
+) -> UserResponse:
     """Giriş yapmış kullanıcının profilini döner."""
-    # TODO (SW-impl): JWT bağımlılığı eklenecek
-    raise HTTPException(status_code=status.HTTP_501_NOT_IMPLEMENTED, detail="Henüz uygulanmadı")
+    return UserResponse(
+        id=str(current_user.id),
+        name=current_user.name,
+        email=current_user.email,
+    )
