@@ -23,7 +23,9 @@ class CalibrationCreateRequest(BaseModel):
     neck_std: float = Field(..., ge=0.0, description="Boyun standart sapması")
     shoulder_mean: float = Field(..., description="Ortalama omuz eğimi")
     shoulder_std: float = Field(..., ge=0.0, description="Omuz standart sapması")
-    distance_cm: float = Field(..., ge=10.0, le=200.0, description="Ölçülen ekran mesafesi (cm)")
+    distance_cm: float = Field(
+        ..., ge=10.0, le=200.0, description="Ölçülen ekran mesafesi (cm)"
+    )
 
 
 class CalibrationResponse(BaseModel):
@@ -54,7 +56,9 @@ class CalibrationResponse(BaseModel):
 def create_calibration(body: CalibrationCreateRequest) -> CalibrationResponse:
     """Yeni kalibrasyon profili kaydeder."""
     # TODO (SW-impl): CalibrationService.create() çağrısı eklenecek
-    raise HTTPException(status_code=status.HTTP_501_NOT_IMPLEMENTED, detail="Henüz uygulanmadı")
+    raise HTTPException(
+        status_code=status.HTTP_501_NOT_IMPLEMENTED, detail="Henüz uygulanmadı"
+    )
 
 
 @router.get(
@@ -66,7 +70,9 @@ def create_calibration(body: CalibrationCreateRequest) -> CalibrationResponse:
 def latest_calibration() -> CalibrationResponse:
     """Aktif (en son) kalibrasyon profilini döner."""
     # TODO (SW-impl): CalibrationRepository.latest() çağrısı eklenecek
-    raise HTTPException(status_code=status.HTTP_501_NOT_IMPLEMENTED, detail="Henüz uygulanmadı")
+    raise HTTPException(
+        status_code=status.HTTP_501_NOT_IMPLEMENTED, detail="Henüz uygulanmadı"
+    )
 
 
 @router.get(
@@ -78,4 +84,6 @@ def latest_calibration() -> CalibrationResponse:
 def get_calibration(profile_id: str) -> CalibrationResponse:
     """Tek bir kalibrasyon profilini döner."""
     # TODO (SW-impl): CalibrationRepository.get() çağrısı eklenecek
-    raise HTTPException(status_code=status.HTTP_501_NOT_IMPLEMENTED, detail="Henüz uygulanmadı")
+    raise HTTPException(
+        status_code=status.HTTP_501_NOT_IMPLEMENTED, detail="Henüz uygulanmadı"
+    )

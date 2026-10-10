@@ -56,7 +56,9 @@ class AlertFeedbackResponse(BaseModel):
     "/",
     response_model=AlertListResponse,
     summary="Uyarı listesi",
-    description="Giriş yapan kullanıcının uyarılarını döner; isteğe bağlı oturum filtresi.",
+    description=(
+        "Giriş yapan kullanıcının uyarılarını döner; isteğe bağlı oturum filtresi."
+    ),
 )
 def list_alerts(
     session_id: str | None = Query(None, description="Filtre: oturum ID'si"),
@@ -65,7 +67,9 @@ def list_alerts(
 ) -> AlertListResponse:
     """Kullanıcıya ait ergonomi uyarılarını listeler."""
     # TODO (SW-impl): AlertRepository.get_user_alerts() çağrısı eklenecek
-    raise HTTPException(status_code=status.HTTP_501_NOT_IMPLEMENTED, detail="Henüz uygulanmadı")
+    raise HTTPException(
+        status_code=status.HTTP_501_NOT_IMPLEMENTED, detail="Henüz uygulanmadı"
+    )
 
 
 @router.get(
@@ -77,7 +81,9 @@ def list_alerts(
 def get_alert(alert_id: str) -> AlertResponse:
     """Tek bir uyarının bilgilerini döner."""
     # TODO (SW-impl): AlertRepository.get() çağrısı eklenecek
-    raise HTTPException(status_code=status.HTTP_501_NOT_IMPLEMENTED, detail="Henüz uygulanmadı")
+    raise HTTPException(
+        status_code=status.HTTP_501_NOT_IMPLEMENTED, detail="Henüz uygulanmadı"
+    )
 
 
 @router.post(
@@ -90,4 +96,6 @@ def get_alert(alert_id: str) -> AlertResponse:
 def submit_feedback(alert_id: str, body: AlertFeedbackRequest) -> AlertFeedbackResponse:
     """Uyarı için is_false geri bildirimini kaydeder."""
     # TODO (SW-impl): AlertRepository.save_feedback() çağrısı eklenecek
-    raise HTTPException(status_code=status.HTTP_501_NOT_IMPLEMENTED, detail="Henüz uygulanmadı")
+    raise HTTPException(
+        status_code=status.HTTP_501_NOT_IMPLEMENTED, detail="Henüz uygulanmadı"
+    )

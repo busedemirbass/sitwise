@@ -65,4 +65,3 @@ if __name__ == "__main__":
 
     # Sunucuyu yerel makinede 8000 portunda başlatıyoruz
     uvicorn.run("main:app", host="127.0.0.1", port=8000, reload=True)
-

@@ -23,9 +23,15 @@ class MetricSample(BaseModel):
 
     ts: datetime = Field(..., description="Örnek zaman damgası (UTC)")
     neck_ratio: float = Field(..., ge=0.0, le=2.0, description="Boyun eğim oranı")
-    shoulder_tilt: float = Field(..., ge=-90.0, le=90.0, description="Omuz eğimi (derece)")
-    distance_cm: float = Field(..., ge=10.0, le=200.0, description="Ekran mesafesi (cm)")
-    blinks_per_min: int = Field(..., ge=0, le=60, description="Dakikadaki göz kırpma sayısı")
+    shoulder_tilt: float = Field(
+        ..., ge=-90.0, le=90.0, description="Omuz eğimi (derece)"
+    )
+    distance_cm: float = Field(
+        ..., ge=10.0, le=200.0, description="Ekran mesafesi (cm)"
+    )
+    blinks_per_min: int = Field(
+        ..., ge=0, le=60, description="Dakikadaki göz kırpma sayısı"
+    )
     state: str = Field(..., description="Duruş durumu: 'good' | 'warning' | 'bad'")
 
 
@@ -75,7 +81,9 @@ class MetricListResponse(BaseModel):
 def ingest(body: IngestRequest) -> IngestResponse:
     """Bir oturuma ait toplu metrik örneklerini kabul eder."""
     # TODO (SW-impl): MetricsService.ingest() çağrısı eklenecek
-    raise HTTPException(status_code=status.HTTP_501_NOT_IMPLEMENTED, detail="Henüz uygulanmadı")
+    raise HTTPException(
+        status_code=status.HTTP_501_NOT_IMPLEMENTED, detail="Henüz uygulanmadı"
+    )
 
 
 @router.get(
@@ -86,11 +94,15 @@ def ingest(body: IngestRequest) -> IngestResponse:
 )
 def list_metrics(
     session_id: str | None = Query(None, description="Filtre: oturum ID'si"),
-    start: datetime | None = Query(None, description="Başlangıç zamanı (UTC, ISO 8601)"),
+    start: datetime | None = Query(
+        None, description="Başlangıç zamanı (UTC, ISO 8601)"
+    ),
     end: datetime | None = Query(None, description="Bitiş zamanı (UTC, ISO 8601)"),
     limit: int = Query(100, ge=1, le=1000, description="Sayfa başı kayıt sayısı"),
     offset: int = Query(0, ge=0, description="Atlama sayısı"),
 ) -> MetricListResponse:
     """Zaman dilimi ve oturum filtresiyle metrik örneklerini döner."""
     # TODO (SW-impl): MetricRepository.by_date_range() çağrısı eklenecek
-    raise HTTPException(status_code=status.HTTP_501_NOT_IMPLEMENTED, detail="Henüz uygulanmadı")
+    raise HTTPException(
+        status_code=status.HTTP_501_NOT_IMPLEMENTED, detail="Henüz uygulanmadı"
+    )
