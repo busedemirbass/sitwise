@@ -1,6 +1,6 @@
 # Architecture (SW-016)
 
-This document shows the parts of SitWise, where each part runs, and what data moves between them. The camera image stays on the user's computer. Only the numbers defined in `docs/api/contract.md` go to the server (NFR-01, ADR-002).
+This document shows the parts of SitWise, where each part runs, and what data moves between them. The camera image stays on the user's computer. Only the numbers defined in `docs/api/contract.md` go to the server (NFR-01, ADR-002). The trained model also stays on that computer and reads landmark features, not pixels (ADR-003).
 
 ## 1. Component Diagram
 
@@ -15,6 +15,7 @@ flowchart LR
         subgraph Renderer["Electron renderer (React)"]
             Vision["CameraService + LandmarkDetector<br/>MediaPipe, frames in memory only"]
             Analyzers["Posture / Blink / Distance analyzers"]
+            Model["ModelRunner<br/>ONNX, on this computer"]
             Alerts["AlertManager<br/>notifications"]
             Buffer["MetricsBuffer + ApiClient<br/>offline queue"]
         end
@@ -27,6 +28,8 @@ flowchart LR
 
     Cam -->|"video frames (never leave the PC)"| Vision
     Vision -->|"landmarks"| Analyzers
+    Analyzers -->|"features"| Model
+    Model -->|"class, distance"| Alerts
     Analyzers -->|"metric values"| Alerts
     Analyzers -->|"metric values"| Buffer
     Alerts -->|"alert, feedback"| Buffer
@@ -48,7 +51,7 @@ flowchart LR
 
 | Node | Runs | Technology | Notes |
 |------|------|------------|-------|
-| User's computer | Desktop client | Electron + React + Vite + TypeScript, MediaPipe Tasks | Windows 10/11 (NFR-06), macOS optional. Tray icon, background work, auto start (ADR-001). |
+| User's computer | Desktop client | Electron + React + Vite + TypeScript, MediaPipe Tasks, ONNX Runtime | Windows 10/11 (NFR-06), macOS optional. Tray icon, background work, auto start (ADR-001). The model file is loaded locally (ADR-003). |
 | Server | REST API | Python + FastAPI | JWT auth, passwords hashed (NFR-04). Started with Docker Compose. |
 | Server | Database | PostgreSQL | Tables from roadmap section 4.5. |
 
@@ -71,3 +74,4 @@ Message shapes are defined in `docs/api/contract.md` (SW-010). None of them cont
 
 - [ADR-001: Electron desktop app](../adr/ADR-001-electron.md)
 - [ADR-002: Local image processing](../adr/ADR-002-local-processing.md)
+- [ADR-003: Landmark features, not images](../adr/ADR-003-landmark-features.md)
