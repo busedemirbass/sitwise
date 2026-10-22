@@ -9,31 +9,22 @@ from fastapi.middleware.cors import CORSMiddleware
 from api.v1.router import api_v1_router
 
 # ---------------------------------------------------------------------------
-# Uygulama nesnesi
+# Uygulama nesnesi (main dalındaki temel ayarlar korunarak)
 # ---------------------------------------------------------------------------
 
-app = FastAPI(
-    title="SitWise API",
-    description=(
-        "SitWise Ergonomi Asistanı arka uç servisi.\n\n"
-        "**Gizlilik notu:** Kamera kareleri asla iletilmez; "
-        "yalnızca sayısal ergonomi özetleri gönderilir."
-    ),
-    version="1.0.0",
-    docs_url="/docs",
-    redoc_url="/redoc",
-    openapi_url="/openapi.json",
-)
+app = FastAPI(title="SitWise Server", version="0.1.0")
 
-# ---------------------------------------------------------------------------
-# Ara katman — CORS
-# Masaüstü uygulamasının (Electron) sunucuya sorunsuz bağlanabilmesi için
-# ---------------------------------------------------------------------------
+origins = [
+    "http://localhost:3000",
+    "http://localhost:5173",
+    "http://127.0.0.1:3000",
+    "http://127.0.0.1:5173",
+]
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
-    allow_credentials=True,
+    allow_origins=origins,
+    allow_credentials=False,
     allow_methods=["*"],
     allow_headers=["*"],
 )
@@ -50,10 +41,9 @@ app.include_router(api_v1_router)
 # ---------------------------------------------------------------------------
 
 
-@app.get("/health", tags=["Health"])
-def health_check() -> dict:
-    """Sunucunun ayakta olup olmadığını kontrol eden uç nokta."""
-    return {"status": "healthy", "service": "SitWise API", "version": "1.0.0"}
+@app.get("/health")
+def health_check():
+    return {"status": "ok", "service": "sitwise-server"}
 
 
 # ---------------------------------------------------------------------------
@@ -63,6 +53,4 @@ def health_check() -> dict:
 if __name__ == "__main__":
     import uvicorn
 
-    # Sunucuyu yerel makinede 8000 portunda başlatıyoruz
     uvicorn.run("main:app", host="127.0.0.1", port=8000, reload=True)
-
