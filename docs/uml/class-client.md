@@ -25,6 +25,22 @@ classDiagram
         +detect(frame) Landmarks
     }
 
+    class FeatureExtractor {
+        +extract(lm) FeatureVector
+    }
+
+    class ModelRunner {
+        -session
+        +predict(features) Prediction
+    }
+
+    class Recorder {
+        -writer
+        +start() void
+        +write(row) void
+        +stop() void
+    }
+
     class MetricAnalyzer {
         <<abstract>>
         #name: string
@@ -114,6 +130,10 @@ classDiagram
 
     LandmarkDetector ..> CameraService : reads frames
     MetricAnalyzer ..> LandmarkDetector : uses landmarks
+    FeatureExtractor ..> LandmarkDetector : reads landmarks
+    MetricAnalyzer ..> FeatureExtractor : reads features
+    ModelRunner ..> FeatureExtractor : reads features
+    Recorder ..> FeatureExtractor : records rows
 
     MetricAnalyzer <|-- PostureAnalyzer
     MetricAnalyzer <|-- BlinkAnalyzer
@@ -147,6 +167,9 @@ TrayController has no arrow. It runs in the Electron main process; the other cla
 |-------|------|----------------|-----------|
 | CameraService | Class (Singleton) | Opens the webcam once and gives frames to the app. | LandmarkDetector reads its frames. |
 | LandmarkDetector | Class | Runs MediaPipe FaceLandmarker and PoseLandmarker on a frame. | Depends on CameraService. |
+| FeatureExtractor | Class | Turns landmarks into the named posture, distance and blink features. | Reads LandmarkDetector. The analyzers and ModelRunner read its vector. |
+| ModelRunner | Class | Runs the ONNX posture and distance models on this computer. | Reads a feature vector. Returns a class, a probability or centimetres. |
+| Recorder | Class | Writes feature rows and the command label to a CSV during a data session. | Reads FeatureExtractor. It never writes a camera frame. |
 | MetricAnalyzer | Abstract class | Common base for all analyzers: compares a value with the user's baseline. | Parent of the 3 analyzers. |
 | PostureAnalyzer | Subclass | Calculates neck ratio and shoulder tilt. | Extends MetricAnalyzer. |
 | BlinkAnalyzer | Subclass | Detects blinks (EAR) and counts blinks per minute. | Extends MetricAnalyzer. |
@@ -173,4 +196,4 @@ TrayController has no arrow. It runs in the Electron main process; the other cla
 | Singleton | CameraService: the camera is opened only once. |
 | Observer | AlertManager → ToastNotifier, MiniIndicator |
 
-This is version 1. It will be updated when the code changes (Definition of Done, item 3).
+The classes above stay as version 1. FeatureExtractor, ModelRunner and Recorder were added for the v2 model plan. FeatureExtractor is where the landmark formulas will live. ModelRunner runs the trained model on those numbers. Recorder stores the numbers for SitWise-Desk and does not store an image.
