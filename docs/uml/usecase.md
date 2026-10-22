@@ -1,6 +1,6 @@
 # Use Case Diagram (SW-012)
 
-This document shows what the user does with the posture assistant app and which tasks the system is part of. Use case IDs follow the roadmap (UC-01 to UC-09).
+This document shows what the user does with the posture assistant app and which tasks the system is part of. Use case IDs follow the roadmap (UC-01 to UC-10). UC-10 is the v2 recording session. The earlier nine use cases are unchanged.
 
 ## 1. Diagram
 
@@ -18,6 +18,7 @@ flowchart LR
         UC07(["UC-07 Rate fatigue"])
         UC08(["UC-08 Respond to break suggestion"])
         UC09(["UC-09 Change settings"])
+        UC10(["UC-10 Data collection session"])
     end
 
     System["System"]
@@ -30,6 +31,7 @@ flowchart LR
     User --- UC07
     User --- UC08
     User --- UC09
+    User --- UC10
 
     System --> UC04
     UC04 --> User
@@ -56,3 +58,4 @@ flowchart LR
 | UC-07 | Rate fatigue | User | User is logged in | 1. User opens the fatigue form. 2. User gives a score. 3. System saves it. | Fatigue score is saved. |
 | UC-08 | Respond to break suggestion | User | System has suggested a break | 1. User sees the suggestion. 2. User accepts or postpones it. 3. System saves the answer. | Break is started or postponed. |
 | UC-09 | Change settings | User | User is logged in | 1. User opens settings. 2. User changes options. 3. System saves them. | New settings are active. |
+| UC-10 | Data collection session | User | Camera is available and the participant has given consent | 1. User starts a recording session. 2. System shows the commands in order: upright, forward head, slouch, lean, sit at 40/60/80 cm, then free work. 3. While the user follows the command, the system writes numeric features and that command's label about five times a second. 4. The system does not write a camera frame. | One CSV for the session, with no image in the file. |
