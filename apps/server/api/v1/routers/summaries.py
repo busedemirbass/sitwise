@@ -44,14 +44,20 @@ class SummaryRangeResponse(BaseModel):
     "/daily",
     response_model=DailySummaryResponse,
     summary="Günlük özet",
-    description="Belirtilen tarihe ait ergonomi özet puanını ve istatistiklerini döner.",
+    description=(
+        "Belirtilen tarihe ait ergonomi özet puanını ve istatistiklerini döner."
+    ),
 )
 def daily_summary(
-    target_date: date = Query(..., alias="date", description="Özet tarihi (YYYY-MM-DD)"),
+    target_date: date = Query(
+        ..., alias="date", description="Özet tarihi (YYYY-MM-DD)"
+    ),
 ) -> DailySummaryResponse:
     """Tek günlük ergonomi özetini döner."""
     # TODO (SW-impl): SummaryService.daily() çağrısı eklenecek
-    raise HTTPException(status_code=status.HTTP_501_NOT_IMPLEMENTED, detail="Henüz uygulanmadı")
+    raise HTTPException(
+        status_code=status.HTTP_501_NOT_IMPLEMENTED, detail="Henüz uygulanmadı"
+    )
 
 
 @router.get(
@@ -66,4 +72,6 @@ def range_summary(
 ) -> SummaryRangeResponse:
     """Tarih aralığındaki tüm günlük özetleri döner."""
     # TODO (SW-impl): SummaryService.range() çağrısı eklenecek
-    raise HTTPException(status_code=status.HTTP_501_NOT_IMPLEMENTED, detail="Henüz uygulanmadı")
+    raise HTTPException(
+        status_code=status.HTTP_501_NOT_IMPLEMENTED, detail="Henüz uygulanmadı"
+    )

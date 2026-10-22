@@ -5,7 +5,15 @@ SW-015: OpenAPI spesifikasyonu v1
 
 from fastapi import APIRouter
 
-from api.v1.routers import alerts, auth, calibration, metrics, sessions, summaries, thresholds
+from api.v1.routers import (
+    alerts,
+    auth,
+    calibration,
+    metrics,
+    sessions,
+    summaries,
+    thresholds,
+)
 
 api_v1_router = APIRouter(prefix="/api/v1")
 

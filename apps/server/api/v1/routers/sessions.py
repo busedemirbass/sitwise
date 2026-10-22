@@ -54,7 +54,9 @@ class SessionListResponse(BaseModel):
 def start_session(body: StartSessionRequest) -> SessionResponse:
     """Yeni oturum açar; ilk metrik gönderiminden önce çağrılmalıdır."""
     # TODO (SW-impl): SessionService.start() çağrısı eklenecek
-    raise HTTPException(status_code=status.HTTP_501_NOT_IMPLEMENTED, detail="Henüz uygulanmadı")
+    raise HTTPException(
+        status_code=status.HTTP_501_NOT_IMPLEMENTED, detail="Henüz uygulanmadı"
+    )
 
 
 @router.patch(
@@ -66,7 +68,9 @@ def start_session(body: StartSessionRequest) -> SessionResponse:
 def end_session(session_id: str) -> SessionResponse:
     """Açık oturumu kapatır."""
     # TODO (SW-impl): SessionService.end() çağrısı eklenecek
-    raise HTTPException(status_code=status.HTTP_501_NOT_IMPLEMENTED, detail="Henüz uygulanmadı")
+    raise HTTPException(
+        status_code=status.HTTP_501_NOT_IMPLEMENTED, detail="Henüz uygulanmadı"
+    )
 
 
 @router.get(
@@ -78,7 +82,9 @@ def end_session(session_id: str) -> SessionResponse:
 def list_sessions() -> SessionListResponse:
     """Kullanıcının oturum geçmişini döner."""
     # TODO (SW-impl): SessionService.list() çağrısı eklenecek
-    raise HTTPException(status_code=status.HTTP_501_NOT_IMPLEMENTED, detail="Henüz uygulanmadı")
+    raise HTTPException(
+        status_code=status.HTTP_501_NOT_IMPLEMENTED, detail="Henüz uygulanmadı"
+    )
 
 
 @router.get(
@@ -90,4 +96,6 @@ def list_sessions() -> SessionListResponse:
 def get_session(session_id: str) -> SessionResponse:
     """Tek bir oturumun bilgilerini döner."""
     # TODO (SW-impl): SessionService.get() çağrısı eklenecek
-    raise HTTPException(status_code=status.HTTP_501_NOT_IMPLEMENTED, detail="Henüz uygulanmadı")
+    raise HTTPException(
+        status_code=status.HTTP_501_NOT_IMPLEMENTED, detail="Henüz uygulanmadı"
+    )

@@ -37,7 +37,10 @@ class ThresholdUpsertRequest(BaseModel):
 
     metric: str = Field(
         ...,
-        description="Metrik adı: 'neck_ratio' | 'shoulder_tilt' | 'distance_cm' | 'blinks_per_min'",
+        description=(
+            "Metrik adı: 'neck_ratio' | 'shoulder_tilt' | "
+            "'distance_cm' | 'blinks_per_min'"
+        ),
     )
     value: float = Field(..., description="Yeni eşik değeri")
 
@@ -56,7 +59,9 @@ class ThresholdUpsertRequest(BaseModel):
 def list_thresholds() -> ThresholdListResponse:
     """Tüm kullanıcı eşiklerini döner."""
     # TODO (SW-impl): ThresholdRepository.list() çağrısı eklenecek
-    raise HTTPException(status_code=status.HTTP_501_NOT_IMPLEMENTED, detail="Henüz uygulanmadı")
+    raise HTTPException(
+        status_code=status.HTTP_501_NOT_IMPLEMENTED, detail="Henüz uygulanmadı"
+    )
 
 
 @router.put(
@@ -68,16 +73,22 @@ def list_thresholds() -> ThresholdListResponse:
 def upsert_threshold(body: ThresholdUpsertRequest) -> ThresholdResponse:
     """Metrik eşiğini oluşturur ya da mevcut değeri günceller."""
     # TODO (SW-impl): ThresholdRepository.upsert() çağrısı eklenecek
-    raise HTTPException(status_code=status.HTTP_501_NOT_IMPLEMENTED, detail="Henüz uygulanmadı")
+    raise HTTPException(
+        status_code=status.HTTP_501_NOT_IMPLEMENTED, detail="Henüz uygulanmadı"
+    )
 
 
 @router.delete(
     "/{metric}",
     status_code=status.HTTP_204_NO_CONTENT,
     summary="Eşik değeri sil",
-    description="Belirtilen metriğin eşik değerini kaldırır; sistem varsayılanına döner.",
+    description=(
+        "Belirtilen metriğin eşik değerini kaldırır; sistem varsayılanına döner."
+    ),
 )
 def delete_threshold(metric: str) -> None:
     """Kullanıcıya özel eşik değerini siler."""
     # TODO (SW-impl): ThresholdRepository.delete() çağrısı eklenecek
-    raise HTTPException(status_code=status.HTTP_501_NOT_IMPLEMENTED, detail="Henüz uygulanmadı")
+    raise HTTPException(
+        status_code=status.HTTP_501_NOT_IMPLEMENTED, detail="Henüz uygulanmadı"
+    )
