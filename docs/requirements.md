@@ -44,3 +44,30 @@ Server rows: FR-08, FR-10, FR-11, FR-14, FR-16.
 | NFR-07 | Maintainability | The server service layer has at least 70% test coverage | CI report |
 
 Client checks: NFR-01, NFR-02, NFR-06. Server checks: NFR-03, NFR-04, NFR-07. NFR-05 is shared; the questionnaire is filled during the volunteer test.
+
+## Model requirements
+
+The tables above stay as written. These rows are the v2 additions. Models learn from numbers computed on MediaPipe landmarks. They are not trained on camera images. A trained model runs on the user's computer.
+
+| ID | Requirement | Priority | Task |
+| --- | --- | --- | --- |
+| FR-17 | A recording session writes numeric features and the current command label to a CSV, and it does not write an image | Must | SW-072 |
+| FR-18 | Posture and distance models run on the user's computer from those features | Must | SW-078 |
+| FR-19 | The same unseen-person test compares four approaches: rule thresholds, a public-data model, the SitWise-Desk model, and a personalized threshold | Must | SW-076, SW-085, SW-061 |
+
+## Success criteria
+
+These targets come from section 2 of roadmap v2. The final report marks each one as met or missed, with the reason. A missed target is still a valid result.
+
+| Area | Measure | Target | How it is measured |
+| --- | --- | --- | --- |
+| Posture classification | Macro F1 on people the model has not seen | ≥ 0.85 | Volunteer test set and leave-one-subject-out |
+| Model contribution | F1 difference, model minus rule-based | ≥ +5 points | Same test set |
+| Screen distance | Mean absolute error | ≤ 5 cm, over 40–80 cm | Ruler at 40, 60 and 80 cm |
+| Blink | F1, and error in blinks per minute | ≥ 0.85, and ±2 | A public blink set, plus a hand count |
+| Fatigue | Accuracy separating awake and sleepy | ≥ 70% | UTA-RLDD, split by person |
+| Personalization | Drop in the false-alert rate | ≥ 30% | Before and after personalization |
+| Performance | Model time per frame, and CPU | ≤ 10 ms, and ≤ 15% | A mid-range laptop |
+| Privacy | Images sent over the network | 0 | Network check (TC-10) |
+| Usability | SUS score | ≥ 70 | Questionnaire after the volunteer test |
+| Data | SitWise-Desk participants | ≥ 10 for training, plus 10–15 for test | Dataset card |
