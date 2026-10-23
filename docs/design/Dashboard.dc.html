@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Dashboard</title>
+<script src="./vendor/react.js"></script>
+<script src="./vendor/react-dom.js"></script>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;800&amp;family=Caveat:wght@600&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#23262B;text-decoration-color:#A9D6E5}a:hover{color:#23262B}
+</style>
+</helmet>
+<div style="width: 960px; height: 640px; box-sizing: border-box; background: #F7F5F0; color: #23262B; font-family: 'Nunito', system-ui, sans-serif; display: flex">
+
+<nav aria-label="Main menu" style="width: 200px; box-sizing: border-box; padding: 24px 16px; border-right: 2px solid #C9C6BF; display: flex; flex-direction: column; gap: 6px">
+<div style="display: flex; align-items: center; gap: 8px; font-size: 22px; font-weight: 800; padding: 0 8px 18px">
+<svg width="30" height="30" viewBox="-24 -21 46 44" fill="none" stroke="#23262B" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+<circle cx="-16" cy="-10" r="7" fill="#5A3B2E"></circle>
+<circle cx="0" cy="0" r="17" fill="#FFF4DC"></circle>
+<path d="M -17 3 A 17 17 0 0 1 13 -11 Q 3 -5 -5 -7 Q -10 -1 -11 7 Z" fill="#5A3B2E"></path>
+<path d="M -5 0 Q -2 -5 1 0 M 6 0 Q 9 -5 12 0"></path>
+<path d="M -1 7 Q 4 12 9 7"></path>
+</svg>
+SitWise
+</div>
+<a href="Dashboard.dc.html" aria-current="page" style="padding: 12px; border-radius: 12px; background: #A9D6E5; color: #23262B; text-decoration: none; font-weight: 800">Dashboard</a>
+<a href="Calibration.dc.html" style="padding: 12px; border-radius: 12px; color: #C9C6BF; text-decoration: none; font-weight: 600">Calibration</a>
+<a href="RecordingSetup.dc.html" style="padding: 12px; border-radius: 12px; color: #C9C6BF; text-decoration: none; font-weight: 600">Recording</a>
+<a href="Settings.dc.html" style="padding: 12px; border-radius: 12px; color: #C9C6BF; text-decoration: none; font-weight: 600">Settings</a>
+</nav>
+
+<main style="flex: 1; box-sizing: border-box; padding: 26px 36px; display: flex; flex-direction: column; gap: 14px">
+<div style="display: flex; align-items: center; justify-content: space-between">
+<div style="display: flex; flex-direction: column; gap: 2px">
+<h1 style="margin: 0; font-size: 30px; font-weight: 800">Today</h1>
+<span style="font-size: 14px; color: #23262B">[Date] · sample data</span>
+</div>
+<button type="button" style="min-height: 44px; padding: 0 18px; border-radius: 12px; border: 2px solid #A9D6E5; background: #A9D6E5; color: #23262B; font: 700 14px 'Nunito', sans-serif; display: flex; align-items: center; gap: 8px">
+<span style="width: 10px; height: 10px; border-radius: 5px; background: #2E8B57"></span>
+Tracking on · Pause
+</button>
+</div>
+
+<div role="status" style="display: flex; align-items: center; gap: 14px; background: #FFFFFF; border: 2px solid #E3B04B; border-radius: 16px; padding: 10px 14px">
+<svg width="40" height="40" viewBox="-24 -21 46 44" fill="none" stroke="#23262B" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+<circle cx="-16" cy="-10" r="7" fill="#5A3B2E"></circle>
+<circle cx="0" cy="0" r="17" fill="#FFF4DC"></circle>
+<path d="M -17 3 A 17 17 0 0 1 13 -11 Q 3 -5 -5 -7 Q -10 -1 -11 7 Z" fill="#5A3B2E"></path>
+<circle cx="-2" cy="0" r="2.3" fill="#23262B" stroke="none"></circle>
+<circle cx="9" cy="0" r="2.3" fill="#23262B" stroke="none"></circle>
+<path d="M 0 8 H 9"></path>
+</svg>
+<div style="flex: 1; display: flex; flex-direction: column; gap: 1px">
+<strong style="font-size: 15px">Watch out · 14:32</strong>
+<span style="font-size: 14px; color: #23262B">Your head has been leaning forward for 2 minutes. Sit back when you are ready.</span>
+</div>
+<button type="button" style="min-height: 44px; padding: 0 16px; border-radius: 12px; border: 2px solid #A9D6E5; background: #A9D6E5; color: #23262B; font: 800 14px 'Nunito', sans-serif; border-color: #A9D6E5B6">Got it</button>
+<button type="button" style="min-height: 44px; padding: 0 16px; border-radius: 12px; border: 2px solid #A9D6E5; color: #23262B; font: 700 14px 'Nunito', sans-serif; background-color: #A9D6E5">This was wrong</button>
+</div>
+
+<div style="display: flex; gap: 18px">
+<div style="width: 250px; box-sizing: border-box; background: #FFFFFF; border: 2px solid #C9C6BF; border-radius: 20px; padding: 16px; display: flex; align-items: center; gap: 14px">
+<svg width="68" height="68" viewBox="-24 -21 46 44" fill="none" stroke="#23262B" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+<circle cx="-16" cy="-10" r="7" fill="#5A3B2E"></circle>
+<circle cx="0" cy="0" r="17" fill="#FFF4DC"></circle>
+<path d="M -17 3 A 17 17 0 0 1 13 -11 Q 3 -5 -5 -7 Q -10 -1 -11 7 Z" fill="#5A3B2E"></path>
+<path d="M -5 0 Q -2 -5 1 0 M 6 0 Q 9 -5 12 0"></path>
+<path d="M -1 7 Q 4 12 9 7"></path>
+<circle cx="-5" cy="7" r="2.6" fill="#F4A6A6" stroke="none"></circle>
+<circle cx="13" cy="6" r="2.6" fill="#F4A6A6" stroke="none"></circle>
+</svg>
+<div style="display: flex; flex-direction: column">
+<span style="font-size: 14px; color: #23262B">Daily score</span>
+<span style="font-size: 44px; font-weight: 800; line-height: 1">82<span style="font-size: 18px; color: #23262B">/100</span></span>
+</div>
+</div>
+<div style="flex: 1; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px">
+<div style="background: #FFFFFF; border: 2px solid #C9C6BF; border-radius: 16px; padding: 10px 14px; display: flex; flex-direction: column"><span style="font-size: 13px; color: #23262B">Good posture time</span><strong style="font-size: 20px">4 h 12 min</strong></div>
+<div style="background: #FFFFFF; border: 2px solid #C9C6BF; border-radius: 16px; padding: 10px 14px; display: flex; flex-direction: column"><span style="font-size: 13px; color: #23262B">Alerts</span><strong style="font-size: 20px">6</strong></div>
+<div style="background: #FFFFFF; border: 2px solid #C9C6BF; border-radius: 16px; padding: 10px 14px; display: flex; flex-direction: column"><span style="font-size: 13px; color: #23262B">Blinks</span><strong style="font-size: 20px">14 / min</strong></div>
+<div style="background: #FFFFFF; border: 2px solid #C9C6BF; border-radius: 16px; padding: 10px 14px; display: flex; flex-direction: column"><span style="font-size: 13px; color: #23262B">Avg. screen distance</span><strong style="font-size: 20px">58 cm</strong></div>
+</div>
+</div>
+
+<section aria-label="Hour by hour timeline" style="flex: 1; background: #FFFFFF; border: 2px solid #C9C6BF; border-radius: 20px; padding: 14px 20px; display: flex; flex-direction: column; gap: 10px">
+<div style="display: flex; align-items: center; justify-content: space-between">
+<strong style="font-size: 16px">Hour by hour</strong>
+<div style="display: flex; gap: 14px; font-size: 13px; color: #23262B">
+<span style="display: flex; align-items: center; gap: 6px"><span style="width: 10px; height: 10px; border-radius: 3px; background: #2E8B57"></span>Good</span>
+<span style="display: flex; align-items: center; gap: 6px"><span style="width: 10px; height: 10px; border-radius: 3px; background: #E3B04B"></span>Watch out</span>
+<span style="display: flex; align-items: center; gap: 6px"><span style="width: 10px; height: 10px; border-radius: 3px; background: #C53D3D"></span>Sit up</span>
+<span style="display: flex; align-items: center; gap: 6px"><span style="width: 10px; height: 10px; border-radius: 3px; background: #D9D6CF"></span>Not tracked</span>
+</div>
+</div>
+<div style="flex: 1; display: flex; gap: 10px; align-items: stretch">
+<sc-for list="{{hours}}" as="h" hint-placeholder-count="10">
+<div style="flex: 1; display: flex; flex-direction: column; gap: 6px">
+<div style="flex: 1; display: flex; flex-direction: column-reverse; border-radius: 8px; overflow: hidden; background: #D9D6CF">
+<div style="flex: {{h.g}}; background: #2E8B57"></div>
+<div style="flex: {{h.y}}; background: #E3B04B"></div>
+<div style="flex: {{h.r}}; background: #C53D3D"></div>
+<div style="flex: {{h.n}}"></div>
+</div>
+<span style="font-size: 12px; color: #23262B; text-align: center">{{h.label}}</span>
+</div>
+</sc-for>
+</div>
+</section>
+</main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":960,"height":640}}'>
+class Component extends DCLogic {
+renderVals() {
+var data = [
+['09', 50, 8, 2, 0], ['10', 44, 12, 4, 0], ['11', 38, 14, 8, 0], ['12', 10, 4, 1, 45],
+['13', 40, 10, 6, 4], ['14', 30, 16, 14, 0], ['15', 22, 18, 20, 0], ['16', 36, 14, 10, 0],
+['17', 46, 10, 4, 0], ['18', 20, 4, 2, 34]
+];
+return {
+hours: data.map(function (d) { return { label: d[0], g: d[1], y: d[2], r: d[3], n: d[4] }; })
+};
+}
+}
+</script>
+</body>
+</html>

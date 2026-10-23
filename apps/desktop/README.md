@@ -42,6 +42,10 @@ src/renderer   React arayüzü
 resources/     tepsi ve uygulama simgeleri
 ```
 
+## SW-017 — ekran çizimleri
+
+Çizimler `docs/design/` altındadır. Bunlar referanstır; Electron uygulamasının kodu değildir. Nasıl açılacağı `docs/design/README.md` dosyasındadır.
+
 ## Bilinen sınırlar
 
 - Linux'ta otomatik başlatma yok (Electron desteklemiyor).
