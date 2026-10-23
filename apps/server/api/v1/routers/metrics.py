@@ -1,14 +1,24 @@
 """
 Metrics router — ergonomi metrik örneklerini toplu gönderme ve sorgulama uçları.
-SW-015: OpenAPI spesifikasyonu v1
+SW-015 / SW-029: OpenAPI spesifikasyonu v1 ve uç nokta uygulaması.
 
 Kural: Kamera kareleri asla gönderilmez; yalnızca sayısal özetler iletilir.
 """
 
+from __future__ import annotations
+
 from datetime import datetime
 
-from fastapi import APIRouter, HTTPException, Query, status
+from fastapi import APIRouter, Depends, Query, status
 from pydantic import BaseModel, Field
+from sqlalchemy.orm import Session
+
+from api.deps import get_current_user
+from db.session import get_db
+from models.user import User
+from repositories.metric_repository import MetricRepository
+from repositories.session_repository import SessionRepository
+from services.metrics_service import MetricsService
 
 router = APIRouter(prefix="/metrics", tags=["Metrics"])
 
@@ -32,7 +42,12 @@ class MetricSample(BaseModel):
     blinks_per_min: int = Field(
         ..., ge=0, le=60, description="Dakikadaki göz kırpma sayısı"
     )
-    state: str = Field(..., description="Duruş durumu: 'good' | 'warning' | 'bad'")
+    state: str = Field(
+        ...,
+        min_length=1,
+        max_length=50,
+        description="Duruş durumu: 'good' | 'warning' | 'bad' | 'ok' | 'warn'",
+    )
 
 
 class IngestRequest(BaseModel):
@@ -54,6 +69,9 @@ class MetricSampleResponse(MetricSample):
 
     id: int
     session_id: str
+
+    class Config:
+        from_attributes = True
 
 
 class MetricListResponse(BaseModel):
@@ -78,31 +96,74 @@ class MetricListResponse(BaseModel):
         "Kamera karesi asla gönderilmez."
     ),
 )
-def ingest(body: IngestRequest) -> IngestResponse:
+@router.post(
+    "/",
+    response_model=IngestResponse,
+    status_code=status.HTTP_202_ACCEPTED,
+    include_in_schema=False,
+)
+def ingest(
+    body: IngestRequest,
+    current_user: User = Depends(get_current_user),
+    db: Session = Depends(get_db),
+) -> IngestResponse:
     """Bir oturuma ait toplu metrik örneklerini kabul eder."""
-    # TODO (SW-impl): MetricsService.ingest() çağrısı eklenecek
-    raise HTTPException(
-        status_code=status.HTTP_501_NOT_IMPLEMENTED, detail="Henüz uygulanmadı"
+    service = MetricsService(
+        metric_repo=MetricRepository(db),
+        session_repo=SessionRepository(db),
     )
+    sample_dicts = [s.model_dump() for s in body.samples]
+    accepted = service.ingest(
+        session_id=body.session_id,
+        user_id=current_user.id,
+        samples=sample_dicts,
+    )
+    return IngestResponse(accepted=accepted, session_id=body.session_id)
 
 
 @router.get(
     "/",
     response_model=MetricListResponse,
     summary="Metrik örnekleri listele",
-    description="Belirtilen tarih aralığındaki metrik örneklerini döner.",
+    description="Belirtilen oturum veya tarih aralığındaki metrik örneklerini döner.",
 )
 def list_metrics(
-    session_id: str | None = Query(None, description="Filtre: oturum ID'si"),
+    session_id: str = Query(..., description="Oturum ID'si"),
     start: datetime | None = Query(
         None, description="Başlangıç zamanı (UTC, ISO 8601)"
     ),
     end: datetime | None = Query(None, description="Bitiş zamanı (UTC, ISO 8601)"),
     limit: int = Query(100, ge=1, le=1000, description="Sayfa başı kayıt sayısı"),
     offset: int = Query(0, ge=0, description="Atlama sayısı"),
+    current_user: User = Depends(get_current_user),
+    db: Session = Depends(get_db),
 ) -> MetricListResponse:
     """Zaman dilimi ve oturum filtresiyle metrik örneklerini döner."""
-    # TODO (SW-impl): MetricRepository.by_date_range() çağrısı eklenecek
-    raise HTTPException(
-        status_code=status.HTTP_501_NOT_IMPLEMENTED, detail="Henüz uygulanmadı"
+    service = MetricsService(
+        metric_repo=MetricRepository(db),
+        session_repo=SessionRepository(db),
+    )
+    samples, total = service.get_metrics(
+        session_id=session_id,
+        user_id=current_user.id,
+        from_ts=start,
+        to_ts=end,
+        limit=limit,
+        offset=offset,
+    )
+    return MetricListResponse(
+        samples=[
+            MetricSampleResponse(
+                id=s.id,
+                session_id=str(s.session_id),
+                ts=s.ts,
+                neck_ratio=s.neck_ratio,
+                shoulder_tilt=s.shoulder_tilt,
+                distance_cm=s.distance_cm,
+                blinks_per_min=s.blinks_per_min,
+                state=s.state,
+            )
+            for s in samples
+        ],
+        total=total,
     )
