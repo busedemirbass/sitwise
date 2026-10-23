@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Recording: during session</title>
+<script src="./vendor/react.js"></script>
+<script src="./vendor/react-dom.js"></script>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;800&amp;family=Caveat:wght@600&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#23262B;text-decoration-color:#A9D6E5}a:hover{color:#23262B}
+</style>
+</helmet>
+<div style="width: 960px; height: 640px; box-sizing: border-box; background: #F7F5F0; color: #23262B; font-family: 'Nunito', system-ui, sans-serif; display: flex">
+
+<nav aria-label="Main menu" style="width: 200px; box-sizing: border-box; padding: 24px 16px; border-right: 2px solid #C9C6BF; display: flex; flex-direction: column; gap: 6px">
+<div style="display: flex; align-items: center; gap: 8px; font-size: 22px; font-weight: 800; padding: 0 8px 18px">
+<svg width="30" height="30" viewBox="-24 -21 46 44" fill="none" stroke="#23262B" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+<circle cx="-16" cy="-10" r="7" fill="#5A3B2E"></circle>
+<circle cx="0" cy="0" r="17" fill="#FFF4DC"></circle>
+<path d="M -17 3 A 17 17 0 0 1 13 -11 Q 3 -5 -5 -7 Q -10 -1 -11 7 Z" fill="#5A3B2E"></path>
+<path d="M -5 0 Q -2 -5 1 0 M 6 0 Q 9 -5 12 0"></path>
+<path d="M -1 7 Q 4 12 9 7"></path>
+</svg>
+SitWise
+</div>
+<a href="Dashboard.dc.html" style="padding: 12px; border-radius: 12px; color: #C9C6BF; text-decoration: none; font-weight: 600">Dashboard</a>
+<a href="Calibration.dc.html" style="padding: 12px; border-radius: 12px; color: #C9C6BF; text-decoration: none; font-weight: 600">Calibration</a>
+<a href="RecordingSetup.dc.html" aria-current="page" style="padding: 12px; border-radius: 12px; background: #A9D6E5; color: #23262B; text-decoration: none; font-weight: 800">Recording</a>
+<a href="Settings.dc.html" style="padding: 12px; border-radius: 12px; color: #C9C6BF; text-decoration: none; font-weight: 600">Settings</a>
+</nav>
+
+<main style="flex: 1; box-sizing: border-box; padding: 22px 28px; display: flex; flex-direction: column; gap: 14px">
+<div style="display: flex; align-items: center; justify-content: space-between; gap: 12px">
+<div style="display: flex; flex-direction: column; gap: 4px">
+<h1 style="margin: 0; font-size: 26px; font-weight: 800">Recording session</h1>
+<span style="align-self: flex-start; background: #A9D6E5; border-radius: 999px; padding: 3px 12px; font-size: 13px; font-weight: 700">P07 · no glasses · good light · laptop camera</span>
+</div>
+<a href="RecordingSaved.dc.html" style="min-height: 44px; box-sizing: border-box; padding: 0 18px; border-radius: 12px; border: 2px solid #A9D6E5; background: #A9D6E5; color: #23262B; font-weight: 700; font-size: 14px; text-decoration: none; display: flex; align-items: center">Stop and save</a>
+</div>
+
+<div style="display: flex; flex-direction: column; gap: 6px">
+<div style="display: flex; justify-content: space-between; font-size: 13px; color: #23262B"><span><strong>Step 6 of 7</strong> · 4:07 elapsed</span><span>about 10 min in total</span></div>
+<div style="height: 12px; box-sizing: border-box; border-radius: 6px; background: #FFFFFF; border: 2px solid #C9C6BF; overflow: hidden"><div style="width: 54%; height: 100%; background: #A9D6E5"></div></div>
+</div>
+
+<div style="flex: 1; display: flex; gap: 16px; min-height: 0">
+<ol aria-label="Steps" style="width: 214px; margin: 0; padding: 12px; box-sizing: border-box; list-style: none; background: #FFFFFF; border: 2px solid #C9C6BF; border-radius: 18px; display: flex; flex-direction: column; gap: 4px">
+<sc-for list="{{steps}}" as="s" hint-placeholder-count="7">
+<li style="display: flex; gap: 10px; align-items: flex-start; padding: 7px 8px; border-radius: 10px; background: {{s.bg}}">
+<span style="flex: none; width: 24px; height: 24px; border-radius: 12px; box-sizing: border-box; border: 2px solid {{s.ring}}; background: {{s.dot}}; font-size: 12px; font-weight: 800; display: flex; align-items: center; justify-content: center">{{s.mark}}</span>
+<span style="display: flex; flex-direction: column; gap: 1px">
+<span style="font-size: 13px; font-weight: {{s.weight}}; color: {{s.color}}">{{s.text}}</span>
+<span style="font-size: 12px; color: #23262B">{{s.meta}}</span>
+</span>
+</li>
+</sc-for>
+</ol>
+
+<div style="flex: 1; display: flex; flex-direction: column; gap: 14px; min-width: 0">
+<section aria-label="Current command" style="background: #FFFFFF; border: 2px solid #C9C6BF; border-radius: 18px; padding: 14px 16px; display: flex; gap: 14px; align-items: center">
+<svg width="150" height="125" viewBox="0 0 180 150" fill="none" stroke="#23262B" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+<path d="M10 146 H172" stroke-width="2" stroke="#C9C6BF"></path>
+<path d="M34 112 V70 Q34 64 40 64"></path>
+<path d="M28 112 H70" stroke-width="5"></path>
+<path d="M36 114 V146 M64 114 V146"></path>
+<path d="M48 108 V72"></path>
+<path d="M48 108 H84 L86 144 H97"></path>
+<path d="M50 78 L66 96 L104 102"></path>
+<g transform="translate(52 52)">
+<circle cx="-16" cy="-10" r="7" fill="#5A3B2E"></circle>
+<circle cx="0" cy="0" r="17" fill="#FFF4DC"></circle>
+<path d="M -17 3 A 17 17 0 0 1 13 -11 Q 3 -5 -5 -7 Q -10 -1 -11 7 Z" fill="#5A3B2E"></path>
+<circle cx="-2" cy="0" r="2.3" fill="#23262B" stroke="none"></circle>
+<circle cx="9" cy="0" r="2.3" fill="#23262B" stroke="none"></circle>
+<path d="M 0 8 Q 4 10 9 8"></path>
+</g>
+<path d="M74 62 H124 M80 57 L74 62 L80 67 M118 57 L124 62 L118 67" stroke="#23262B" stroke-width="2.5"></path>
+<text x="99" y="50" text-anchor="middle" font-family="Nunito, sans-serif" font-size="13" font-weight="800" fill="#23262B" stroke="none">60 cm</text>
+<path d="M94 104 H172"></path>
+<path d="M108 104 V146 M164 104 V146"></path>
+<rect x="128" y="58" width="38" height="30" rx="5" fill="#FFFFFF"></rect>
+<path d="M147 88 V104 M138 104 H156"></path>
+</svg>
+<div style="flex: 1; display: flex; flex-direction: column; gap: 6px">
+<span style="font-size: 13px; font-weight: 800; color: #23262B">Distance 2 of 3</span>
+<strong style="font-size: 22px; line-height: 1.2">Sit 60 cm from the screen. Check it with the ruler.</strong>
+<div style="display: flex; align-items: center; gap: 10px">
+<span style="font-size: 30px; font-weight: 800">12 s</span>
+<span style="font-size: 13px; color: #23262B">left in this command</span>
+</div>
+<span style="align-self: flex-start; background: #A9D6E5; border-radius: 8px; padding: 2px 10px; font-size: 13px; font-family: ui-monospace, Menlo, monospace">label = distance · distance_cm = 60</span>
+</div>
+</section>
+
+<div style="display: flex; gap: 14px">
+<figure style="margin: 0; width: 248px; display: flex; flex-direction: column; gap: 6px">
+<div style="height: 160px; box-sizing: border-box; border: 2px dashed #C9C6BF; border-radius: 14px; background: #FFFFFF; position: relative; display: flex; align-items: center; justify-content: center">
+<svg width="110" height="130" viewBox="0 0 200 230" fill="none" stroke="#C9C6BF" stroke-width="5" stroke-dasharray="12 12" stroke-linecap="round" aria-hidden="true">
+<circle cx="100" cy="70" r="44"></circle>
+<path d="M20 230 Q22 150 100 140 Q178 150 180 230"></path>
+</svg>
+<span style="position: absolute; top: 8px; left: 8px; background: #FFFFFF; border-radius: 999px; padding: 3px 10px; font-size: 12px; font-weight: 700">Live preview · not recorded</span>
+</div>
+<figcaption style="font-size: 12px; color: #23262B">No image is saved. This session writes a CSV of numbers and the current command.</figcaption>
+</figure>
+
+<section aria-label="Ruler distance" style="flex: 1; background: #FFFFFF; border: 2px solid #C9C6BF; border-radius: 14px; padding: 12px 14px; display: flex; flex-direction: column; gap: 10px">
+<strong style="font-size: 14px">Ruler distance</strong>
+<div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px">
+<div style="min-height: 52px; border-radius: 12px; border: 2px solid #C9C6BF; display: flex; flex-direction: column; align-items: center; justify-content: center"><strong style="font-size: 18px">40 cm</strong><span style="font-size: 12px; color: #23262B">done</span></div>
+<div style="min-height: 52px; border-radius: 12px; border: 2px solid #A9D6E5; background: #A9D6E5; display: flex; flex-direction: column; align-items: center; justify-content: center"><strong style="font-size: 18px">60 cm</strong><span style="font-size: 12px; color: #23262B">now</span></div>
+<div style="min-height: 52px; border-radius: 12px; border: 2px solid #C9C6BF; display: flex; flex-direction: column; align-items: center; justify-content: center"><strong style="font-size: 18px; color: #23262B">80 cm</strong><span style="font-size: 12px; color: #23262B">next</span></div>
+</div>
+<div style="font-size: 12px; color: #23262B; display: flex; flex-direction: column; gap: 2px">
+<span>Writing 5 rows per second</span>
+<span style="font-family: ui-monospace, Menlo, monospace">P07_S01_2026-10-23.csv · 1 235 rows</span>
+</div>
+</section>
+</div>
+</div>
+</div>
+</main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":960,"height":640}}'>
+class Component extends DCLogic {
+renderVals() {
+var rows = [
+['Sit upright, look at the screen', '5 s · calibration'],
+['Sit upright, type and read', '60 s · upright'],
+['Lean your head forward', '45 s · forward'],
+['Slouch, drop your shoulders', '45 s · slouch'],
+['Lean right, then left', '2 × 30 s · leaning'],
+['Sit at 40, 60, 80 cm', '3 × 20 s · distance'],
+['Work freely', '3 min · free']
+];
+var current = 5;
+return {
+steps: rows.map(function (r, i) {
+var done = i < current;
+var now = i === current;
+return {
+text: r[0],
+meta: r[1],
+mark: done ? '✓' : String(i + 1),
+bg: now ? '#A9D6E5' : 'transparent',
+ring: now ? '#A9D6E5' : done ? '#A9D6E5' : '#C9C6BF',
+dot: done ? '#A9D6E5' : '#FFFFFF',
+weight: now ? '800' : '600',
+color: done || now ? '#23262B' : '#23262B'
+};
+})
+};
+}
+}
+</script>
+</body>
+</html>

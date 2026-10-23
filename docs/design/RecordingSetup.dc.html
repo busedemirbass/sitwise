@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Recording: before start</title>
+<script src="./vendor/react.js"></script>
+<script src="./vendor/react-dom.js"></script>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;800&amp;family=Caveat:wght@600&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#23262B;text-decoration-color:#A9D6E5}a:hover{color:#23262B}
+</style>
+</helmet>
+<div style="width: 960px; height: 640px; box-sizing: border-box; background: #F7F5F0; color: #23262B; font-family: 'Nunito', system-ui, sans-serif; display: flex">
+
+<nav aria-label="Main menu" style="width: 200px; box-sizing: border-box; padding: 24px 16px; border-right: 2px solid #C9C6BF; display: flex; flex-direction: column; gap: 6px">
+<div style="display: flex; align-items: center; gap: 8px; font-size: 22px; font-weight: 800; padding: 0 8px 18px">
+<svg width="30" height="30" viewBox="-24 -21 46 44" fill="none" stroke="#23262B" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+<circle cx="-16" cy="-10" r="7" fill="#5A3B2E"></circle>
+<circle cx="0" cy="0" r="17" fill="#FFF4DC"></circle>
+<path d="M -17 3 A 17 17 0 0 1 13 -11 Q 3 -5 -5 -7 Q -10 -1 -11 7 Z" fill="#5A3B2E"></path>
+<path d="M -5 0 Q -2 -5 1 0 M 6 0 Q 9 -5 12 0"></path>
+<path d="M -1 7 Q 4 12 9 7"></path>
+</svg>
+SitWise
+</div>
+<a href="Dashboard.dc.html" style="padding: 12px; border-radius: 12px; color: #C9C6BF; text-decoration: none; font-weight: 600">Dashboard</a>
+<a href="Calibration.dc.html" style="padding: 12px; border-radius: 12px; color: #C9C6BF; text-decoration: none; font-weight: 600">Calibration</a>
+<a href="RecordingSetup.dc.html" aria-current="page" style="padding: 12px; border-radius: 12px; background: #A9D6E5; color: #23262B; text-decoration: none; font-weight: 800">Recording</a>
+<a href="Settings.dc.html" style="padding: 12px; border-radius: 12px; color: #C9C6BF; text-decoration: none; font-weight: 600">Settings</a>
+</nav><main style="flex: 1; box-sizing: border-box; padding: 28px 36px; display: flex; flex-direction: column; gap: 18px">
+<div style="display: flex; flex-direction: column; gap: 4px">
+<h1 style="margin: 0; font-size: 30px; font-weight: 800">Recording</h1>
+<p style="margin: 0; font-size: 15px; color: #23262B">Collect training data for the SitWise-Desk dataset. The app shows one command at a time for about 10 minutes.</p>
+</div>
+
+<div style="display: flex; gap: 20px; align-items: flex-start">
+<form style="flex: 1; background: #FFFFFF; border: 2px solid #C9C6BF; border-radius: 20px; padding: 8px 20px 18px; display: flex; flex-direction: column">
+
+<div style="min-height: 76px; display: flex; align-items: center; justify-content: space-between; gap: 16px; border-bottom: 1px solid #C9C6BF">
+<div style="display: flex; flex-direction: column; gap: 2px">
+<label for="pcode" style="font-weight: 800; font-size: 15px">Anonymous person code</label>
+<span style="font-size: 13px; color: #23262B">A code like P07. Do not enter a name.</span>
+</div>
+<input id="pcode" type="text" value="P07" style="width: 120px; min-height: 44px; box-sizing: border-box; border: 2px solid #C9C6BF; border-radius: 12px; padding: 0 12px; font: 800 16px 'Nunito', sans-serif; color: #23262B; background: #FFFFFF">
+</div>
+
+<fieldset style="margin: 0; padding: 0; border: 0; min-height: 64px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #C9C6BF">
+<legend style="float: left; font-weight: 800; font-size: 15px; padding: 0">Glasses</legend>
+<div style="display: flex; gap: 8px">
+<label style="min-width: 100px; min-height: 44px; box-sizing: border-box; border: 2px solid #C9C6BF; border-radius: 12px; display: flex; align-items: center; justify-content: center; gap: 8px; font-weight: 600"><input type="radio" name="glasses" style="accent-color: #A9D6E5"> Yes</label>
+<label style="min-width: 100px; min-height: 44px; box-sizing: border-box; border: 2px solid #A9D6E5; background: #A9D6E5; border-radius: 12px; display: flex; align-items: center; justify-content: center; gap: 8px; font-weight: 800"><input type="radio" name="glasses" checked="" style="accent-color: #A9D6E5"> No</label>
+</div>
+</fieldset>
+
+<fieldset style="margin: 0; padding: 0; border: 0; min-height: 64px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #C9C6BF">
+<legend style="float: left; font-weight: 800; font-size: 15px; padding: 0">Light</legend>
+<div style="display: flex; gap: 8px">
+<label style="min-width: 100px; min-height: 44px; box-sizing: border-box; border: 2px solid #A9D6E5; background: #A9D6E5; border-radius: 12px; display: flex; align-items: center; justify-content: center; gap: 8px; font-weight: 800"><input type="radio" name="light" checked="" style="accent-color: #A9D6E5"> Good</label>
+<label style="min-width: 100px; min-height: 44px; box-sizing: border-box; border: 2px solid #C9C6BF; border-radius: 12px; display: flex; align-items: center; justify-content: center; gap: 8px; font-weight: 600"><input type="radio" name="light" style="accent-color: #A9D6E5"> Dim</label>
+</div>
+</fieldset>
+
+<fieldset style="margin: 0; padding: 0; border: 0; min-height: 64px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #C9C6BF">
+<legend style="float: left; font-weight: 800; font-size: 15px; padding: 0">Camera</legend>
+<div style="display: flex; gap: 8px">
+<label style="min-width: 100px; min-height: 44px; box-sizing: border-box; border: 2px solid #A9D6E5; background: #A9D6E5; border-radius: 12px; display: flex; align-items: center; justify-content: center; gap: 8px; font-weight: 800"><input type="radio" name="camera" checked="" style="accent-color: #A9D6E5"> Laptop</label>
+<label style="min-width: 100px; min-height: 44px; box-sizing: border-box; border: 2px solid #C9C6BF; border-radius: 12px; display: flex; align-items: center; justify-content: center; gap: 8px; font-weight: 600"><input type="radio" name="camera" style="accent-color: #A9D6E5"> External</label>
+</div>
+</fieldset>
+
+<label style="min-height: 56px; display: flex; align-items: center; gap: 10px; font-weight: 600; font-size: 14px"><input type="checkbox" checked="" style="width: 22px; height: 22px; accent-color: #A9D6E5"> The signed consent form for this person is on file.</label>
+
+<div style="display: flex; gap: 10px; align-items: center">
+<a href="RecordingSession.dc.html" style="min-height: 48px; box-sizing: border-box; padding: 0 22px; border-radius: 12px; border: 2px solid #A9D6E5; background: #A9D6E5; color: #23262B; font-weight: 800; font-size: 15px; text-decoration: none; display: flex; align-items: center">Start session</a>
+<span style="font-size: 13px; color: #23262B">Calibration runs first (step 1).</span>
+</div>
+</form>
+
+<aside style="width: 248px; box-sizing: border-box; background: #FFFFFF; border: 2px solid #A9D6E5; border-radius: 20px; padding: 16px 18px; display: flex; flex-direction: column; gap: 10px">
+<strong style="font-size: 15px">7 commands · about 10 min</strong>
+<ol style="margin: 0; padding-left: 20px; display: flex; flex-direction: column; gap: 6px; font-size: 13px">
+<li>Sit upright, look at the screen · 5 s</li>
+<li>Sit upright, type and read · 60 s</li>
+<li>Lean your head forward · 45 s</li>
+<li>Slouch, drop your shoulders · 45 s</li>
+<li>Lean right, then left · 2 × 30 s</li>
+<li>Sit at 40, 60, 80 cm · 3 × 20 s</li>
+<li>Work freely · 3 min</li>
+</ol>
+<p style="margin: 0; font-size: 13px; color: #23262B; border-top: 1px solid #A9D6E5; padding-top: 10px">No image is saved. This session writes a CSV of numbers and the current command.</p>
+</aside>
+</div>
+</main>
+
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":960,"height":640}}'>
+class Component extends DCLogic {
+renderVals() {
+return {};
+}
+}
+</script>
+</body>
+</html>
