@@ -11,6 +11,7 @@ export type FrameFeatures = PostureMetrics & {
 /**
  * SW-025: posture and distance from a single call.
  * SW-026 adds the eye aspect ratio. Blink counting needs the previous frame, so it stays outside this call.
+ * SW-027 reads noseShoulderDrop from the same posture result to judge an upright calibration.
  * The formulas stay in posture.ts, distance.ts, and blink.ts.
  */
 export function featuresFromFrame(
@@ -23,6 +24,7 @@ export function featuresFromFrame(
   return {
     neckRatio: posture.neckRatio,
     shoulderTilt: posture.shoulderTilt,
+    noseShoulderDrop: posture.noseShoulderDrop,
     distanceCm: distanceCmFromFace(faceLandmarks, videoWidth, videoHeight),
     ear: earFromFace(faceLandmarks),
   };

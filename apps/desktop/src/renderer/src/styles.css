@@ -253,6 +253,25 @@ textarea {
   color: var(--error-fg);
 }
 
+.banner-ok {
+  background: var(--ok-bg);
+  color: var(--ok-fg);
+}
+
+.progress {
+  height: 8px;
+  margin: 8px 0;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--bg);
+  overflow: hidden;
+}
+
+.progress > div {
+  height: 100%;
+  background: var(--accent);
+}
+
 .muted {
   color: var(--muted);
 }
