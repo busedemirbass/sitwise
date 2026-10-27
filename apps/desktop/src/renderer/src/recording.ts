@@ -3,7 +3,7 @@ export const SAMPLE_INTERVAL_MS = 200;
 
 /**
  * Feature names from docs/ml/features.md.
- * neckRatio, shoulderTilt and distanceCm are computed on this branch.
+ * neckRatio, shoulderTilt, distanceCm and noseShoulderDrop are computed on this branch.
  * The others stay empty until their own cards are on main. This file does not add a formula.
  */
 export const FEATURE_COLUMNS = [
@@ -52,6 +52,7 @@ export type ComputedFeatures = {
   neckRatio: number | null;
   shoulderTilt: number | null;
   distanceCm: number | null;
+  noseShoulderDrop: number | null;
 };
 
 export type RecordingRow = {
@@ -129,7 +130,7 @@ export function rowCells(meta: SessionMeta, row: RecordingRow): string[] {
     cell(row.features.neckRatio, 4),
     cell(row.features.shoulderTilt, 4),
     cell(row.features.distanceCm, 1),
-    '',
+    cell(row.features.noseShoulderDrop, 4),
     '',
     '',
     '',

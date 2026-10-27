@@ -8,6 +8,7 @@ export type FrameFeatures = PostureMetrics & {
 
 /**
  * SW-025: posture and distance from a single call.
+ * SW-027 reads noseShoulderDrop from the same posture result to judge an upright calibration.
  * The formulas stay in posture.ts and distance.ts.
  */
 export function featuresFromFrame(
@@ -20,6 +21,7 @@ export function featuresFromFrame(
   return {
     neckRatio: posture.neckRatio,
     shoulderTilt: posture.shoulderTilt,
+    noseShoulderDrop: posture.noseShoulderDrop,
     distanceCm: distanceCmFromFace(faceLandmarks, videoWidth, videoHeight),
   };
 }

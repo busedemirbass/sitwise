@@ -78,6 +78,7 @@ export function useRecording(live: boolean, features: ComputedFeatures | null) {
           neckRatio: reading?.neckRatio ?? null,
           shoulderTilt: reading?.shoulderTilt ?? null,
           distanceCm: reading?.distanceCm ?? null,
+          noseShoulderDrop: reading?.noseShoulderDrop ?? null,
         },
         label: current.step.label,
         rulerCm: current.step.rulerCm,
