@@ -13,6 +13,8 @@ const api: SitWiseApi = {
     ipcRenderer.on(IPC.pausedChanged, handler);
     return () => ipcRenderer.removeListener(IPC.pausedChanged, handler);
   },
+  saveRecording: (filename, csv) => ipcRenderer.invoke(IPC.saveRecording, filename, csv),
+  deleteRecording: (filename) => ipcRenderer.invoke(IPC.deleteRecording, filename),
 };
 
 contextBridge.exposeInMainWorld('sitwise', api);
