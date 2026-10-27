@@ -16,6 +16,8 @@ export type MediaPipeState = {
   neckRatio: number | null;
   shoulderTilt: number | null;
   distanceCm: number | null;
+  noseShoulderDrop: number | null;
+  frameSeq: number;
   ready: boolean;
   error: string | null;
 };
@@ -28,6 +30,8 @@ const initialState: MediaPipeState = {
   neckRatio: null,
   shoulderTilt: null,
   distanceCm: null,
+  noseShoulderDrop: null,
+  frameSeq: 0,
   ready: false,
   error: null,
 };
@@ -138,6 +142,8 @@ export function useMediaPipe(videoRef: RefObject<HTMLVideoElement | null>, enabl
           neckRatio: features.neckRatio,
           shoulderTilt: features.shoulderTilt,
           distanceCm: features.distanceCm,
+          noseShoulderDrop: features.noseShoulderDrop,
+          frameSeq: s.frameSeq + 1,
         }));
         if (now - windowStart >= 1000) {
           frames = 0;
