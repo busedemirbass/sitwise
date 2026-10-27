@@ -12,10 +12,18 @@ export function App() {
   const [settings, setSettings] = useState<AppSettings | null>(null);
   const paused = settings?.paused ?? false;
   const { videoRef, status: cameraStatus, error: cameraError, resolution } = useCamera(!paused);
-  const { fps, inferenceTimeMs, ready, neckRatio, shoulderTilt, distanceCm, noseShoulderDrop, frameSeq } = useMediaPipe(
-    videoRef,
-    cameraStatus === 'live',
-  );
+  const {
+    fps,
+    inferenceTimeMs,
+    ready,
+    neckRatio,
+    shoulderTilt,
+    distanceCm,
+    noseShoulderDrop,
+    frameSeq,
+    ear,
+    blinksInLastMinute,
+  } = useMediaPipe(videoRef, cameraStatus === 'live');
   const live = ready && cameraStatus === 'live';
   const sample: CalibrationSample | null =
     live && neckRatio != null && shoulderTilt != null && distanceCm != null && noseShoulderDrop != null
@@ -84,6 +92,10 @@ export function App() {
               <dd>{live && distanceCm != null ? `${Math.round(distanceCm)} cm` : '—'}</dd>
               <dt>Baş yüksekliği</dt>
               <dd>{live && noseShoulderDrop != null ? noseShoulderDrop.toFixed(2) : '—'}</dd>
+              <dt>Göz</dt>
+              <dd>{live && ear != null ? ear.toFixed(2) : '—'}</dd>
+              <dt>Kırpma</dt>
+              <dd>{live ? blinksInLastMinute : '—'}</dd>
               <dt>Platform</dt>
               <dd>{settings?.platform ?? '—'}</dd>
             </dl>
