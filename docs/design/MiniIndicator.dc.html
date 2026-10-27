@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Mini indicator</title>
+<script src="./vendor/react.js"></script>
+<script src="./vendor/react-dom.js"></script>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;800&amp;family=Caveat:wght@600&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#23262B;text-decoration-color:#A9D6E5}a:hover{color:#23262B}
+</style>
+</helmet>
+<div style="width: 960px; height: 320px; box-sizing: border-box; padding: 28px 48px; background: #F7F5F0; color: #23262B; font-family: 'Nunito', system-ui, sans-serif; display: flex; flex-direction: column; gap: 18px">
+<div style="display: flex; flex-direction: column; gap: 4px">
+<h1 style="margin: 0; font-size: 24px; font-weight: 800">Mini indicator</h1>
+<p style="margin: 0; font-size: 14px; color: #23262B">Always on top in a screen corner, can be dragged. Click it to open the dashboard. Color is never the only signal: Dikdik's face and a short label show the state too.</p>
+</div>
+
+<div style="display: flex; gap: 28px; align-items: center">
+<button type="button" aria-label="Posture is good, open dashboard" style="display: flex; align-items: center; gap: 10px; min-height: 56px; padding: 6px 18px 6px 6px; border-radius: 999px; border: 2px solid #C9C6BF; background: #C9C6BF; font: 800 15px 'Nunito', sans-serif; color: #23262B; box-shadow: 0 6px 16px rgba(35,38,43,0.14)">
+<span style="width: 44px; height: 44px; border-radius: 22px; background: #2E8B57; display: flex; align-items: center; justify-content: center">
+<svg width="36" height="36" viewBox="-24 -21 46 44" fill="none" stroke="#23262B" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+<circle cx="-16" cy="-10" r="7" fill="#5A3B2E"></circle>
+<circle cx="0" cy="0" r="17" fill="#FFF4DC"></circle>
+<path d="M -17 3 A 17 17 0 0 1 13 -11 Q 3 -5 -5 -7 Q -10 -1 -11 7 Z" fill="#5A3B2E"></path>
+<path d="M -5 0 Q -2 -5 1 0 M 6 0 Q 9 -5 12 0"></path>
+<path d="M -1 7 Q 4 12 9 7"></path>
+</svg>
+</span>
+Good
+</button>
+
+<button type="button" aria-label="Watch your posture, open dashboard" style="display: flex; align-items: center; gap: 10px; min-height: 56px; padding: 6px 18px 6px 6px; border-radius: 999px; border: 2px solid #C9C6BF; background: #C9C6BF; font: 800 15px 'Nunito', sans-serif; color: #23262B; box-shadow: 0 6px 16px rgba(35,38,43,0.14)">
+<span style="width: 44px; height: 44px; border-radius: 22px; background: #E3B04B; display: flex; align-items: center; justify-content: center">
+<svg width="36" height="36" viewBox="-24 -21 46 44" fill="none" stroke="#23262B" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+<circle cx="-16" cy="-10" r="7" fill="#5A3B2E"></circle>
+<circle cx="0" cy="0" r="17" fill="#FFF4DC"></circle>
+<path d="M -17 3 A 17 17 0 0 1 13 -11 Q 3 -5 -5 -7 Q -10 -1 -11 7 Z" fill="#5A3B2E"></path>
+<circle cx="-2" cy="0" r="2.3" fill="#23262B" stroke="none"></circle>
+<circle cx="9" cy="0" r="2.3" fill="#23262B" stroke="none"></circle>
+<path d="M 0 8 H 9"></path>
+</svg>
+</span>
+Watch out
+</button>
+
+<button type="button" aria-label="Sit up, open dashboard" style="display: flex; align-items: center; gap: 10px; min-height: 56px; padding: 6px 18px 6px 6px; border-radius: 999px; border: 2px solid #C9C6BF; background: #C9C6BF; font: 800 15px 'Nunito', sans-serif; color: #23262B; box-shadow: 0 6px 16px rgba(35,38,43,0.14)">
+<span style="width: 44px; height: 44px; border-radius: 22px; background: #C53D3D; display: flex; align-items: center; justify-content: center">
+<svg width="36" height="36" viewBox="-24 -21 46 44" fill="none" stroke="#23262B" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+<circle cx="-16" cy="-10" r="7" fill="#5A3B2E"></circle>
+<circle cx="0" cy="0" r="17" fill="#FFF4DC"></circle>
+<path d="M -17 3 A 17 17 0 0 1 13 -11 Q 3 -5 -5 -7 Q -10 -1 -11 7 Z" fill="#5A3B2E"></path>
+<path d="M -5 0 H 0 M 6 0 H 11"></path>
+<path d="M -1 9 Q 4 5 9 9"></path>
+</svg>
+</span>
+Sit up
+</button>
+</div>
+
+<div style="display: flex; align-items: center; gap: 18px">
+<span style="font-size: 14px; font-weight: 800">Compact mode (44 px)</span>
+<span aria-label="Good" style="width: 44px; height: 44px; border-radius: 22px; background: #2E8B57; border: 2px solid #C9C6BF; box-sizing: border-box; display: flex; align-items: center; justify-content: center">
+<svg width="34" height="34" viewBox="-24 -21 46 44" fill="none" stroke="#23262B" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+<circle cx="-16" cy="-10" r="7" fill="#5A3B2E"></circle>
+<circle cx="0" cy="0" r="17" fill="#FFF4DC"></circle>
+<path d="M -17 3 A 17 17 0 0 1 13 -11 Q 3 -5 -5 -7 Q -10 -1 -11 7 Z" fill="#5A3B2E"></path>
+<path d="M -5 0 Q -2 -5 1 0 M 6 0 Q 9 -5 12 0"></path>
+<path d="M -1 7 Q 4 12 9 7"></path>
+</svg>
+</span>
+<span aria-label="Watch out" style="width: 44px; height: 44px; border-radius: 22px; background: #E3B04B; border: 2px solid #C9C6BF; box-sizing: border-box; display: flex; align-items: center; justify-content: center">
+<svg width="34" height="34" viewBox="-24 -21 46 44" fill="none" stroke="#23262B" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+<circle cx="-16" cy="-10" r="7" fill="#5A3B2E"></circle>
+<circle cx="0" cy="0" r="17" fill="#FFF4DC"></circle>
+<path d="M -17 3 A 17 17 0 0 1 13 -11 Q 3 -5 -5 -7 Q -10 -1 -11 7 Z" fill="#5A3B2E"></path>
+<circle cx="-2" cy="0" r="2.3" fill="#23262B" stroke="none"></circle>
+<circle cx="9" cy="0" r="2.3" fill="#23262B" stroke="none"></circle>
+<path d="M 0 8 H 9"></path>
+</svg>
+</span>
+<span aria-label="Sit up" style="width: 44px; height: 44px; border-radius: 22px; background: #C53D3D; border: 2px solid #C9C6BF; box-sizing: border-box; display: flex; align-items: center; justify-content: center">
+<svg width="34" height="34" viewBox="-24 -21 46 44" fill="none" stroke="#23262B" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+<circle cx="-16" cy="-10" r="7" fill="#5A3B2E"></circle>
+<circle cx="0" cy="0" r="17" fill="#FFF4DC"></circle>
+<path d="M -17 3 A 17 17 0 0 1 13 -11 Q 3 -5 -5 -7 Q -10 -1 -11 7 Z" fill="#5A3B2E"></path>
+<path d="M -5 0 H 0 M 6 0 H 11"></path>
+<path d="M -1 9 Q 4 5 9 9"></path>
+</svg>
+</span>
+<span style="font-size: 13px; color: #23262B">Only the face; the label appears on hover.</span>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":960,"height":320}}'>
+class Component extends DCLogic {
+renderVals() {
+return {};
+}
+}
+</script>
+</body>
+</html>
