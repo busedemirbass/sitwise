@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState, type RefObject } from 'react';
 import { FaceLandmarker, FilesetResolver, PoseLandmarker } from '@mediapipe/tasks-vision';
-import { distanceCmFromFace } from '../distance';
-import { postureFromLandmarks } from '../posture';
+import { featuresFromFrame } from '../features';
 
 const WASM_BASE = 'https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@1.0.1/wasm';
 const FACE_MODEL =
@@ -124,17 +123,21 @@ export function useMediaPipe(videoRef: RefObject<HTMLVideoElement | null>, enabl
         inferenceSum += elapsed;
 
         const now = performance.now();
-        const posture = postureFromLandmarks(poseResult.landmarks[0]);
-        const distanceCm = distanceCmFromFace(faceResult.faceLandmarks[0], video.videoWidth, video.videoHeight);
+        const features = featuresFromFrame(
+          poseResult.landmarks[0],
+          faceResult.faceLandmarks[0],
+          video.videoWidth,
+          video.videoHeight,
+        );
         setState((s) => ({
           ...s,
           fps: frames > 0 ? (frames * 1000) / (now - windowStart) : 0,
           inferenceTimeMs: frames > 0 ? inferenceSum / frames : 0,
           faceDetected: faceResult.faceLandmarks.length > 0,
           poseDetected: poseResult.landmarks.length > 0,
-          neckRatio: posture.neckRatio,
-          shoulderTilt: posture.shoulderTilt,
-          distanceCm,
+          neckRatio: features.neckRatio,
+          shoulderTilt: features.shoulderTilt,
+          distanceCm: features.distanceCm,
         }));
         if (now - windowStart >= 1000) {
           frames = 0;
