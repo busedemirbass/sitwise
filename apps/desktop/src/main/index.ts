@@ -19,8 +19,8 @@ import {
   Tray,
   Menu,
 } from 'electron';
-import { join, normalize, sep } from 'node:path';
-import { existsSync } from 'node:fs';
+import { join, normalize, relative, resolve, sep } from 'node:path';
+import { existsSync, mkdirSync, rmSync, writeFileSync } from 'node:fs';
 import { pathToFileURL, fileURLToPath } from 'node:url';
 import { IPC, type AppSettings } from '../shared/ipc';
 
@@ -239,10 +239,40 @@ function setPaused(value: boolean): AppSettings {
   return currentSettings();
 }
 
+function recordingFile(filename: unknown): string {
+  if (typeof filename !== 'string' || !/^P\d+_S\d+_\d{4}-\d{2}-\d{2}\.csv$/.test(filename)) {
+    throw new Error('Geçersiz kayıt adı.');
+  }
+  const dir = join(app.getPath('userData'), 'recordings');
+  mkdirSync(dir, { recursive: true });
+  const filePath = resolve(dir, filename);
+  const fromDir = relative(resolve(dir), filePath);
+  if (fromDir.startsWith('..') || fromDir.includes(sep) || fromDir === '') {
+    throw new Error('Geçersiz kayıt yolu.');
+  }
+  return filePath;
+}
+
+function saveRecording(filename: unknown, csv: unknown): { path: string } {
+  if (typeof csv !== 'string' || csv.length > 2_000_000 || csv.includes('\0') || !csv.startsWith('person_code,')) {
+    throw new Error('Kayıt yalnızca sayı satırları içerebilir.');
+  }
+  const filePath = recordingFile(filename);
+  writeFileSync(filePath, csv, 'utf8');
+  return { path: filePath };
+}
+
+function deleteRecording(filename: unknown): void {
+  const filePath = recordingFile(filename);
+  if (existsSync(filePath)) rmSync(filePath);
+}
+
 function registerIpc(): void {
   ipcMain.handle(IPC.getSettings, () => currentSettings());
   ipcMain.handle(IPC.setAutoStart, (_e, enabled: unknown) => setAutoStart(enabled === true));
   ipcMain.handle(IPC.setPaused, (_e, value: unknown) => setPaused(value === true));
+  ipcMain.handle(IPC.saveRecording, (_e, filename: unknown, csv: unknown) => saveRecording(filename, csv));
+  ipcMain.handle(IPC.deleteRecording, (_e, filename: unknown) => deleteRecording(filename));
 }
 
 app.on('before-quit', () => {

@@ -272,6 +272,28 @@ textarea {
   background: var(--accent);
 }
 
+.stack {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.field {
+  font: inherit;
+  color: var(--text);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 6px 10px;
+  width: 100%;
+}
+
+.command {
+  margin: 8px 0;
+  font-size: 16px;
+  font-weight: 700;
+}
+
 .muted {
   color: var(--muted);
 }

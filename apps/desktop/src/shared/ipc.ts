@@ -7,6 +7,8 @@ export const IPC = {
   setAutoStart: 'settings:set-auto-start',
   setPaused: 'monitoring:set-paused',
   pausedChanged: 'monitoring:paused-changed',
+  saveRecording: 'recording:save',
+  deleteRecording: 'recording:delete',
 } as const;
 
 export interface AppSettings {
@@ -25,4 +27,7 @@ export interface SitWiseApi {
   setAutoStart(enabled: boolean): Promise<AppSettings>;
   setPaused(paused: boolean): Promise<AppSettings>;
   onPausedChanged(listener: (paused: boolean) => void): () => void;
+  /** Writes one CSV of numbers. The renderer cannot choose a folder or send a camera frame. */
+  saveRecording(filename: string, csv: string): Promise<{ path: string }>;
+  deleteRecording(filename: string): Promise<void>;
 }
