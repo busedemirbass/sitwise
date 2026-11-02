@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState, type RefObject } from 'react';
 import { FaceLandmarker, FilesetResolver, PoseLandmarker } from '@mediapipe/tasks-vision';
+import { blinksInLastMinute, emptyBlinkMemory, observeBlink, type BlinkMemory } from '../blink';
 import { featuresFromFrame } from '../features';
 
 const WASM_BASE = 'https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@1.0.1/wasm';
@@ -18,6 +19,8 @@ export type MediaPipeState = {
   distanceCm: number | null;
   noseShoulderDrop: number | null;
   frameSeq: number;
+  ear: number | null;
+  blinksInLastMinute: number;
   ready: boolean;
   error: string | null;
 };
@@ -32,6 +35,8 @@ const initialState: MediaPipeState = {
   distanceCm: null,
   noseShoulderDrop: null,
   frameSeq: 0,
+  ear: null,
+  blinksInLastMinute: 0,
   ready: false,
   error: null,
 };
@@ -44,6 +49,8 @@ export function useMediaPipe(videoRef: RefObject<HTMLVideoElement | null>, enabl
   const [state, setState] = useState<MediaPipeState>(initialState);
   const faceRef = useRef<FaceLandmarker | null>(null);
   const poseRef = useRef<PoseLandmarker | null>(null);
+  const blinkRef = useRef<BlinkMemory>(emptyBlinkMemory);
+  const timestampRef = useRef(0);
 
   useEffect(() => {
     const created: { face: FaceLandmarker | null; pose: PoseLandmarker | null } = { face: null, pose: null };
@@ -107,17 +114,16 @@ export function useMediaPipe(videoRef: RefObject<HTMLVideoElement | null>, enabl
     let frames = 0;
     let inferenceSum = 0;
     let windowStart = performance.now();
-    let lastTimestamp = -1;
 
     const tick = () => {
       raf = requestAnimationFrame(tick);
       const video = videoRef.current;
-      if (!video) return;
+      if (!video || video.readyState < 2 || video.videoWidth < 2) return;
 
       try {
         let started = performance.now();
-        if (started <= lastTimestamp) started = lastTimestamp + 0.001;
-        lastTimestamp = started;
+        if (started <= timestampRef.current) started = timestampRef.current + 1;
+        timestampRef.current = started;
 
         const faceResult = face.detectForVideo(video, started);
         const poseResult = pose.detectForVideo(video, started);
@@ -133,6 +139,7 @@ export function useMediaPipe(videoRef: RefObject<HTMLVideoElement | null>, enabl
           video.videoWidth,
           video.videoHeight,
         );
+        blinkRef.current = observeBlink(blinkRef.current, features.ear, now);
         setState((s) => ({
           ...s,
           fps: frames > 0 ? (frames * 1000) / (now - windowStart) : 0,
@@ -144,6 +151,8 @@ export function useMediaPipe(videoRef: RefObject<HTMLVideoElement | null>, enabl
           distanceCm: features.distanceCm,
           noseShoulderDrop: features.noseShoulderDrop,
           frameSeq: s.frameSeq + 1,
+          ear: features.ear,
+          blinksInLastMinute: blinksInLastMinute(blinkRef.current),
         }));
         if (now - windowStart >= 1000) {
           frames = 0;

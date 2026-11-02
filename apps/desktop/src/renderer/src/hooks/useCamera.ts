@@ -34,9 +34,24 @@ export function useCamera(active: boolean) {
           return;
         }
         stream = s;
-        if (!video) return;
-        video.srcObject = s;
-        await video.play();
+        const el = video ?? videoRef.current;
+        if (!el) {
+          s.getTracks().forEach((t) => t.stop());
+          return;
+        }
+        el.srcObject = s;
+        await el.play();
+        if (cancelled) return;
+        if (el.videoWidth < 2) {
+          await new Promise<void>((resolve) => {
+            const done = () => {
+              el.removeEventListener('loadeddata', done);
+              resolve();
+            };
+            el.addEventListener('loadeddata', done);
+          });
+        }
+        if (cancelled) return;
         const settings = s.getVideoTracks()[0]?.getSettings();
         setResolution(
           settings ? `${settings.width}×${settings.height} @ ${Math.round(settings.frameRate ?? 0)} fps` : '',
@@ -46,6 +61,7 @@ export function useCamera(active: boolean) {
       .catch((err: unknown) => {
         if (cancelled) return;
         const name = err instanceof DOMException ? err.name : '';
+        if (name === 'AbortError') return;
         setStatus(name === 'NotAllowedError' ? 'denied' : 'error');
         setError(err instanceof Error ? `${err.name}: ${err.message}` : String(err));
       });
