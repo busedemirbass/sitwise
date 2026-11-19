@@ -4,6 +4,7 @@ import type { CalibrationSample } from './calibration';
 import { useCalibration } from './hooks/useCalibration';
 import { useCamera } from './hooks/useCamera';
 import { useMediaPipe } from './hooks/useMediaPipe';
+import { useMetricsUpload } from './hooks/useMetricsUpload';
 import { useRecording } from './hooks/useRecording';
 
 /**
@@ -34,6 +35,13 @@ export function App() {
   const recording = useRecording(
     live,
     live ? { neckRatio, shoulderTilt, distanceCm, noseShoulderDrop } : null,
+  );
+  const upload = useMetricsUpload(
+    live,
+    live && neckRatio != null && shoulderTilt != null && distanceCm != null
+      ? { neckRatio, shoulderTilt, distanceCm, blinksPerMin: blinksInLastMinute }
+      : null,
+    frameSeq,
   );
 
   useEffect(() => {
@@ -227,6 +235,43 @@ export function App() {
                 </button>
               )}
             </div>
+          </section>
+          <section className="card">
+            <h2>Sunucu</h2>
+            <p className="muted small">
+              Sayılar 10 saniyede bir satır olur. İnternet kesilirse satır bekler, gelince gönderilir.
+            </p>
+            <div className="stack">
+              <input
+                className="field"
+                value={upload.baseUrl}
+                onChange={(event) => upload.setBaseUrl(event.target.value)}
+                aria-label="Sunucu adresi"
+              />
+              <input
+                className="field"
+                value={upload.email}
+                onChange={(event) => upload.setEmail(event.target.value)}
+                aria-label="E-posta"
+                autoComplete="username"
+              />
+              <input
+                className="field"
+                type="password"
+                value={upload.password}
+                onChange={(event) => upload.setPassword(event.target.value)}
+                aria-label="Şifre"
+                autoComplete="current-password"
+              />
+              <button type="button" onClick={() => void upload.signIn()} disabled={upload.signedIn}>
+                {upload.signedIn ? 'Giriş yapıldı' : 'Giriş'}
+              </button>
+            </div>
+            <dl className="metrics">
+              <dt>Kuyruk</dt>
+              <dd>{upload.pending}</dd>
+            </dl>
+            <p className="small">{upload.note}</p>
           </section>
           <section className="card">
             <h2>Arka plan</h2>
