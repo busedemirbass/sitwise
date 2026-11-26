@@ -1,8 +1,8 @@
 # Data collection protocol (SW-070)
 
-This is the script for one SitWise-Desk recording. It is a draft. The consent form is [`consent-form.md`](consent-form.md). The advisor has not seen either file. Whether this form is enough, or an ethics board is required, is still an open question in the kickoff note. This file does not record an approval.
+This is the script for one SitWise-Desk recording. It is a draft. The consent form is [`consent-form.md`](consent-form.md). This file does not record an ethics approval.
 
-The first recordings are the two teammates. People outside the team are not recorded until the advisor has seen the form and answered that question.
+The advisor has no ethics-board answer yet. A larger collection happens only if TÜBİTAK approval arrives. It is not required now. People outside the team are not recorded until that approval arrives.
 
 ## What a session is
 
@@ -50,6 +50,12 @@ One CSV per session. Example name: `P07_S01_2026-10-23.csv`. The file stays in t
 `camera`, `glasses`, and `light` are chosen once and repeated on every row, so a row can be read on its own.
 
 The screen may show the command in English. The file stores the tokens in the table, not the English sentence.
+
+## Pilot (SW-074)
+
+The two teammates have each sat this script once. `P01` was checked on disk on 27 October 2026: 2274 rows, ruler values 40, 60 and 80 only on the distance step, and no image. `P02` was recorded by the other teammate and stays on that computer. Neither file is in the repository.
+
+No command, duration, or label changed after these two sittings. Neither sitter reported a step that should be rewritten.
 
 ## After the session
 
